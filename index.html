@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>英語力診断ツール（語彙）｜単語力診断テスト【20問でレベル判定】</title>
+
+  <!-- 検索結果に出る説明文 -->
+  <meta name="description" content="20問の英単語4択クイズでCEFR（A1〜C1+）の語彙レベルを診断する無料英語力テスト。英単語の意味理解に特化し、A1〜C1+のどのあたりにいるかを簡単にチェックできます。" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- canonical（実際のURLに変える） -->
+  <link rel="canonical" href="https://vocabulary-test.netlify.app/" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="英語力診断ツール（語彙）｜単語力診断テスト" />
+  <meta property="og:description" content="20問の英単語4択クイズでCEFR（A1〜C1+）の語彙レベルを診断する無料英語力テスト。単語の意味理解に特化して、あなたの現在の語彙力を可視化します。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vocabulary-test.netlify.app/" />
+  <meta property="og:image" content="https://vocabulary-test.netlify.app/ogp.png" />
+  <meta property="og:site_name" content="英語力診断ツール（語彙）" />
+  <meta property="og:locale" content="ja_JP" />
+
+  <!-- Twitterカード -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="英語力診断ツール（語彙）｜単語力診断テスト" />
+  <meta name="twitter:description" content="英単語4択クイズ形式でCEFR（A1〜C1+）の語彙レベルを診断できる無料英語力テスト。" />
+  <meta name="twitter:image" content="https://vocabulary-test.netlify.app/ogp.png" />
+
+  <!-- 構造化データ（Webアプリとして） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "英語力診断ツール（語彙）｜単語力診断テスト",
+    "url": "https://vocabulary-test.netlify.app/",
+    "description": "20問の英単語4択クイズでCEFR（A1〜C1+）の語彙レベルを診断する無料英語力テスト。単語の意味理解に特化し、あなたの現在の語彙力を可視化します。",
+    "applicationCategory": "EducationalApplication",
+    "inLanguage": "ja",
+    "operatingSystem": "any"
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <audio id="se-correct" src="correct.mp3" preload="auto"></audio>
+  <audio id="se-wrong" src="wrong.mp3" preload="auto"></audio>
+  <div class="app-container">
+    <header class="app-header">
+      <h1 class="app-title">英語力診断ツール（語彙）｜単語力診断テスト</h1>
+    </header>
+
+    <main class="app-main">
+      <!-- スタート画面 -->
+      <section id="start-screen" class="screen active">
+        <p class="lead-text">
+          20問の英単語4択クイズで、あなたの推定CEFR語彙レベル（A1〜C1+）を診断する無料の英語力診断ツールです。<br>
+  単語の意味理解に特化しているので、「語彙力がどのくらいか」「どのレベル帯から強化すべきか」を簡単にチェックできます。
+        </p>
+        <ul class="start-info">
+          <li>問題数：20問（A1〜C1+ 各2問）</li>
+          <li>形式：英単語 → 日本語の意味（4択）</li>
+          <li>制限時間：1問あたり5秒</li>
+        </ul>
+        <button id="start-btn" class="btn btn-primary">テストを開始する</button>
+      </section>
+
+      <!-- 問題画面 -->
+      <section id="quiz-screen" class="screen">
+        <div class="quiz-header">
+          <div class="quiz-progress">
+            Q<span id="current-question-number">1</span> /
+            <span id="total-questions">20</span>
+          </div>
+          <div class="quiz-timer">
+            残り <span id="timer-value">5</span> 秒
+          </div>
+        </div>
+
+        <div class="quiz-body">
+          <div class="quiz-word" id="question-word">word</div>
+          <div class="quiz-level-tag" id="question-level-tag">A1</div>
+
+          <div class="options-list" id="options-container">
+            <!-- 選択肢ボタンがJSで挿入されます -->
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button id="next-btn" class="btn btn-secondary" disabled>
+            次の問題へ ▶
+          </button>
+        </div>
+      </section>
+
+      <!-- 結果画面 -->
+      <section id="result-screen" class="screen">
+        <h2 class="result-heading">結果</h2>
+
+        <p class="result-main">
+          推定CEFR語彙レベル：
+          <span id="estimated-level" class="result-level">A1</span>
+        </p>
+        <p id="level-description" class="result-description"></p>
+        <p class="result-score">
+          正答数：
+          <span id="correct-count">0</span> /
+          <span id="result-total-questions">20</span>
+        </p>
+
+        <div class="result-detail">
+          <h3 class="result-subheading">レベル別 正答数</h3>
+          <div id="level-breakdown" class="result-breakdown">
+            <!-- JSでテーブルを生成 -->
+          </div>
+        </div>
+
+        <button id="retry-btn" class="btn btn-primary">
+          もう一度テストする
+        </button>
+      </section>
+    </main>
+  </div>
+
+<div class="back-home-container">
+  <a href="https://diagnosis-for-english-learners.netlify.app/" class="back-home-btn">
+    ← 英語力診断ツール 一覧ページへ戻る
+  </a>
+</div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
